@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fullstack - H1</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <a href="../index.html"
+      ><button><span>&#8592;</span>Hakemistoon</button></a
+    >
+    <div class="container">
+      <a href="#" class="backToTop"> &#8593; </a>
+      <h1>Harjoitukset 1</h1>
+      <div class="exbox">
+        <h2>T1</h2>
+        <p id="haloo"></p>
+      </div>
+      <div class="exbox">
+        <h2>T2</h2>
+        <img src="./img/jsbin.png" alt="jsbin image" width="100%" />
+        <img src="./img/codepen.png" alt="codepen image" width="100%" />
+      </div>
+      <div class="exbox">
+        <h2>T3</h2>
+        <pre>
+          <code>
+            let wordArr = ['JavaScriptin', 'opiskelu', 'on', 'ihanaa!'];
+
+            const formulateSentence = (arr) => {
+              let sentence = '';
+              arr.forEach((word, index) =>
+                index === 0 ? (sentence += word) : (sentence += ` ${word}`)
+              );
+              return sentence;
+            };
+
+            console.log(formulateSentence(wordArr));
+          </code>
+        </pre>
+      </div>
+      <div class="exbox">
+        <h2>T4</h2>
+        <pre>
+          <code>
+            let num1 = 1;
+            let num2 = 2;
+            let num3 = 3;
+
+            const findGreatestNumber = (num1, num2, num3) => {
+              let arr = [num1, num2, num3];
+              let result = 0;
+              arr.forEach((num) => {
+                num > result && (result = num);
+              });
+              return result;
+            };
+
+            console.log('Greatest number is:', findGreatestNumber(num1, num2, num3));
+          </code>
+        </pre>
+      </div>
+      <div class="exbox">
+        <h2>T5</h2>
+        <pre>
+          <code>
+            const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+            const findEvenNumbers = (arr) => {
+              const evenNumbers = [];
+              arr.forEach((num) => num % 2 === 0 && evenNumbers.push(num));
+              return evenNumbers;
+            };
+
+            console.log('Numbers:', numbers, 'Even numbers:', findEvenNumbers(numbers));
+          </code>
+        </pre>
+      </div>
+      <div class="exbox">
+        <h2>T6</h2>
+        <div style="border: 1px dashed black; padding: 0.5rem">
+          <h3>JavaScript-taulukon läpikäynti</h3>
+          <code>for- ja for...of-silmukoilla</code>
+          <hr style="margin: 1rem 0" />
+          <div id="t6"></div>
+        </div>
+      </div>
+      <div class="exbox">
+        <h2>T7</h2>
+        <div
+          class="container"
+          style="
+            background-color: white;
+            border-radius: 0.6rem;
+            min-height: 250px;
+            justify-content: space-between;
+            padding: 2rem;
+          "
+        >
+          <h3 style="margin-bottom: 0">Leap year checker</h3>
+          <p>Give a year to check if it is a leap year</p>
+          <p
+            style="height: 1rem; background-color: rgba(0, 0, 0, 0.1)"
+            id="yearResult"
+          ></p>
+          <input
+            style="height: 2rem; text-align: center"
+            type="number"
+            id="year"
+            placeholder="Give a year..."
+          />
+          <button id="submitYear" onclick="checkLeapYear()">Check year</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // T1
+      var v1 = 'Haloo';
+      var v2 = 'Maailma!';
+      const tulos = `<h1>${v1} ${v2}</h1>`;
+      console.log('samulin tulos:', tulos);
+      const showResult = () => {
+        document.getElementById('haloo').innerHTML = tulos;
+      };
+      showResult();
+
+      // T6
+      let taulukko = [11, 22, 33, 44];
+      let summa = 0;
+      let lukumaara = 0;
+      let keskiarvo;
+      // Refactored tulosrivit to an array since having it as string didn't make sense
+      // Well, this code wouldn't go into production anyway so, lol :D
+      let tulosrivit = [];
+
+      const generateTable = (arr) => {
+        for (const item of arr) {
+          summa += item;
+          lukumaara += 1;
+        }
+
+        for (let i = 0; i < arr.length; i++) {
+          tulosrivit.push(`taulukko[${i}] = ${arr[i]}`);
+        }
+
+        document.getElementById('t6').innerHTML = `
+            <p>Taulukon alkiot ovat</p>
+            <br />
+            ${tulosrivit.map((item) => `<p>${item}</p>`).join('')}
+            <br />
+            <p>Taulukon alkioiden</p>
+            <br />
+            <p>lukumäärä: ${lukumaara}</p>
+            <p>summa: ${summa}</p>
+            <p>keskiarvo: ${(summa / arr.length).toFixed(1)}</p>
+        `;
+      };
+
+      generateTable(taulukko);
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>
