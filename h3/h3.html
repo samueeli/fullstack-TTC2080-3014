@@ -6,6 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fullstack - H3</title>
     <link rel="stylesheet" href="../styles.css" />
+    <style>
+      #carouselForm {
+        display: flex;
+        margin-bottom: 4rem;
+      }
+      #carouselForm input[type='radio'] {
+        display: none;
+      }
+      #carouselForm label {
+        padding: 1rem 2rem;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      #carouselForm input:checked ~ label {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+      #carouselOutput {
+        width: 500px;
+        height: 500px;
+      }
+      #carouselOutput img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
   </head>
   <body>
     <a href="../index.html"
@@ -14,7 +39,34 @@
     <div class="container">
       <a href="#" class="backToTop"> &#8593; </a>
       <h1>Harjoitukset 3</h1>
-      <div>stuff...</div>
+      <div class="exbox">
+        <h2>T1</h2>
+        <div>
+          <div class="container">
+            <form id="carouselForm" onchange="setImage()">
+              <div>
+                <input type="radio" name="img" id="1" checked="checked" />
+                <label for="1">Image 1</label>
+              </div>
+              <div>
+                <input type="radio" name="img" id="2" />
+                <label for="2">Image 2</label>
+              </div>
+              <div>
+                <input type="radio" name="img" id="3" />
+                <label for="3">Image 3</label>
+              </div>
+            </form>
+          </div>
+          <div class="container">
+            <div id="carouselOutput"></div>
+          </div>
+        </div>
+      </div>
+      <div class="exbox">
+        <h2>T2</h2>
+      </div>
     </div>
+    <script src="app.js"></script>
   </body>
 </html>
