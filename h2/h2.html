@@ -14,7 +14,164 @@
     <div class="container">
       <a href="#" class="backToTop"> &#8593; </a>
       <h1>Harjoitukset 2</h1>
-      <div>stuff...</div>
+      <div class="exbox">
+        <h2>T1</h2>
+        <form id="sumForm">
+          <div class="container">
+            <h3>Laske luvut yhteen</h3>
+            <input type="number" id="n1" /> <br />
+            <input type="number" id="n2" /> <br />
+            <button
+              type="button"
+              onclick="tulostaSumma(sumForm.n1.value, sumForm.n2.value)"
+            >
+              Laske
+            </button>
+            <p
+              style="min-height: 1rem; margin-top: 1rem"
+              id="sumFormResult"
+            ></p>
+          </div>
+        </form>
+      </div>
+      <div class="exbox">
+        <h2>T2</h2>
+        <pre><code>
+          1  | const myFunctionWithCallback = (p1, p2, callback) => {
+          2  |     return callback(p1, p2)
+          3  |  }
+          4  |
+          5  |  const myFunc = (p1, p2) => `Pitsa ${p1} ja ${p2}`
+          6  |  const result = myFunctionWithCallback('kinkulla', 'juustolla', myFunc)
+          7  |  console.log(result)
+        </code></pre>
+        <ul>
+          <li>Rivi 7 console.log lukee muuttujan "result" (rivi 6).</li>
+          <li>
+            Muuttuja "result" sisältää funktiokutsun myFunctionWithCallback ja
+            antaa tälle parametreiksi ('kinkulla', 'juustolla', myFunc (rivi
+            5)).
+          </li>
+          <li>
+            Rivi 1 myFunctionWithCallback palauttaa console.log:ille lopullisen
+            stringin jonka muodostaa callback funktio parent funktionsa
+            parametrien avulla.
+          </li>
+        </ul>
+      </div>
+      <div class="exbox">
+        <h2>T3</h2>
+        <pre>
+          <code>
+            const print = (str, taskTime) => {
+              setTimeout(function() {
+                console.log(`${str} finished!`)
+              }, taskTime)
+            }
+            
+            const execute = (str, taskTime, callback)  => {  
+              callback(str, taskTime)
+            }
+            
+            console.log("Task1 to execution...")
+            execute('Task1', 2000, print)
+            
+            console.log("Task2 to execution...")
+            execute('Task2', 2000, print)
+            
+            console.log("Task3 to execution...")
+            execute('Task3', 500, print)
+            
+            console.log("Last code line executed!")
+          </code>
+        </pre>
+        <p>
+          Ensimmäinen console.log on
+          <i>console.log("Task1 to execution...")</i>. Tämän jälkeen ohjelma
+          lukee <i>execute('Task2', 2000, print)</i> kutsun, joka saa
+          parametreikseen stringin <i>"Task1"</i>, luvun <i>2000</i> ja callback
+          funktion <i>print</i>. <br />
+          Callback funktiota kutsutaan sitten execute -funktion sisällä. Tämä
+          saa parentiltaan
+          <i>str</i> ("Task1") ja <i>taskTime</i> (2000) parametrit. Funktio
+          print odottaa ensin 2000 millisekuntia, jonka jälkeen se tulostaa
+          konsolille stringin <i>"Task1 finished!</i> <br />
+          Samaan tapaan seuraa tulevat console.logitukset edellistä kaavaa
+          omilla parametreillaan.
+          <br />
+          Viimeisenä sitten konsolille printataan
+          <i>"Last code line executed!"</i> .
+        </p>
+        <br />
+        <p>
+          <b
+            >Tai näin^ ainakin ihanne maailmassa. JavaScript ei ole async kieli,
+            joten ilmeisesti nuo lainit voi tulla miten kerkee. Luultavasti eka
+            noi suorat konsoli logitukset ja sen jälkeen funktio kutsut. Tuolla
+            print funktiossahan on vielä toi setTimeout 2000ms, joten nää
+            varmaan printtaa viimisenä.
+          </b>
+        </p>
+      </div>
+      <div class="exbox">
+        <h2>T4</h2>
+        <div id="gaga"></div>
+      </div>
+      <div class="exbox">
+        <h2>T5</h2>
+        <pre>
+          <code>
+            function Person(name, age, phone, email) {
+              this.name = name;
+              this.age = age;
+              this.phone = phone;
+              this.email = email;
+            
+              this.upAge = function () {
+                this.age++;
+              };
+            }
+            
+            const samuli = new Person('Samuli', 30, '112', 'samuli@samuli.com');
+            samuli.upAge();
+            console.log('samuli:', samuli); // age: 31
+            
+            const liisa = new Person('Liisa', 22, '113', 'liisa@liisa.com');
+            console.log('liisa:', liisa);
+            
+            const pekka = new Person('Pekka', 74, '114', 'pekka@pekka.com');
+            console.log('pekka:', pekka);
+          </code>
+        </pre>
+      </div>
+      <div class="exbox">
+        <h2>T6</h2>
+        <div class="container">
+          <div style="width: 250px; text-align: center">
+            <h3>Vauhtilaskin</h3>
+            <form id="vauhtiForm" style="width: 100%">
+              <div class="spread">
+                Tunnit:<span><input type="number" id="hours" /></span>
+              </div>
+              <div class="spread">
+                Minuutit:<span><input type="number" id="min" /></span>
+              </div>
+              <div class="spread">
+                Sekunnit:<span><input type="number" id="sec" /></span>
+              </div>
+              <div class="spread">
+                Kilometrit:<span><input type="number" id="km" /></span>
+              </div>
+              <button style="margin: 1rem 0" type="submit">
+                Laske vauhdit
+              </button>
+              <div id="kmPerHour"></div>
+              <div id="timePerKm"></div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
+    <script src="app.js"></script>
   </body>
 </html>

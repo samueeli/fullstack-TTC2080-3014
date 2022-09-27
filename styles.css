@@ -39,10 +39,19 @@ h3 {
   margin-bottom: 2rem;
 }
 
+ul {
+  margin-left: 1rem;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.spread {
+  display: flex;
+  justify-content: space-between;
 }
 
 .exbox {
