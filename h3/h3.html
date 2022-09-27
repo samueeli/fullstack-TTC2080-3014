@@ -65,8 +65,31 @@
       </div>
       <div class="exbox">
         <h2>T2</h2>
+        <div class="container">
+          <button onclick="showHcp()">Tulosta tasoitukset</button>
+          <ul style="margin-top: 2rem" id="hcplist"></ul>
+        </div>
       </div>
     </div>
+    <script>
+      //T2
+      const hcpList = document.getElementById('hcplist');
+
+      let hcpdata = [
+        { name: 'Ari', hcp: 54 },
+        { name: 'Pasi', hcp: 5 },
+        { name: 'Seppo', hcp: 20 },
+      ];
+
+      const showHcp = () => {
+        !hcpList.hasChildNodes() &&
+          (hcpList.innerHTML = hcpdata
+            .map((item) => {
+              return `<li>${item.name} ${item.hcp}</li>`;
+            })
+            .join(''));
+      };
+    </script>
     <script src="app.js"></script>
   </body>
 </html>
