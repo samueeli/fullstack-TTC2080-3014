@@ -1,3 +1,10 @@
+:root {
+  --border-radius: 1rem;
+  --bg-grey: rgba(0, 0, 0, 0.1);
+  --spacing1: 1rem;
+  --spacing2: 2rem;
+}
+
 body {
   padding: 2rem;
 }
@@ -37,6 +44,12 @@ h1,
 h2,
 h3 {
   margin-bottom: 2rem;
+}
+
+h4,
+h5,
+h6 {
+  margin-bottom: 1rem;
 }
 
 ul {
