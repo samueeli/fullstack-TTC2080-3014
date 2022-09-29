@@ -48,17 +48,23 @@
       <a href="#" class="backToTop"> &#8593; </a>
       <h1>Harjoitukset 4</h1>
       <div class="exbox">
-        <h2>T1</h2>
+        <h2>T1-T2</h2>
         <div class="filterContainer">
           <input type="checkbox" id="filterBySqft" onchange="renderHouses()" />
           <label style="margin-right: 2rem" for="filterBySqft"
             >alle 200m2</label
           >
           <input type="checkbox" id="filterByPrice" onchange="renderHouses()" />
-          <label for="filterByPrice">alle 1 000 000 euroa</label>
+          <label style="margin-right: 2rem" for="filterByPrice"
+            >alle 1 000 000 euroa</label
+          >
+          <span id="apCount" style="white-space: nowrap"></span>
         </div>
         <hr style="margin-bottom: 1rem" />
         <div id="apCardList"></div>
+      </div>
+      <div class="exbox">
+        <h2>T3</h2>
       </div>
     </div>
     <script src="app.js"></script>

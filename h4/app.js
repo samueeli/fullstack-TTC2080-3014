@@ -1,6 +1,6 @@
 const apartmentList = document.getElementById('apCardList');
 
-//t1
+//T1-T2
 const ApartmentCard = (imgURL, imgAlt, address, sqft, description, price) => {
   return `
       <div class="apCardContainer">
@@ -35,9 +35,12 @@ const filterHouses = (houses) => {
   let result = houses;
   const filterBySqft = document.getElementById('filterBySqft').checked;
   const filterByPrice = document.getElementById('filterByPrice').checked;
+  const apCount = document.getElementById('apCount');
 
   filterBySqft && (result = result.filter((house) => house.sqft < 200));
   filterByPrice && (result = result.filter((house) => house.price < 1000000));
+
+  apCount.innerHTML = `Löytyi <b>${result.length}</b> asuntoa`;
 
   return result;
 };
@@ -46,7 +49,7 @@ const renderHouses = async () => {
   let houses = await getHouses();
   let filteredHouses = filterHouses(houses);
 
-  houses
+  filteredHouses
     ? (apartmentList.innerHTML = filteredHouses
         .map((house, index) => {
           return ApartmentCard(
@@ -65,3 +68,5 @@ const renderHouses = async () => {
 const init = () => {
   renderHouses();
 };
+
+//T3

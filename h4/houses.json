@@ -1,7 +1,7 @@
 [
   {
     "img": "./images/talo1.jpg",
-    "address": "Lönnrotinkatu 3, 00120 , Helsinki",
+    "address": "Lönnrotinkatu 3 A, 00120 , Helsinki",
     "sqft": 170,
     "description": "Granholmin suunnittelema vuonna 1896 valmistunut Kivipalatsi Pyyn korttelissa kuuluu tänäkin päivänä Helsingin kauneimpiin rakennuksiin.",
     "price": 700000
@@ -15,7 +15,7 @@
   },
   {
     "img": "./images/talo3.jpg",
-    "address": "Lönnrotinkatu 3, 00120, Helsinki",
+    "address": "Lönnrotinkatu 3 B, 00120, Helsinki",
     "sqft": 210,
     "description": "Tämän rauhallisen, täydellisesti saneeratun ja muuttovalmiin huoneiston sisäänkäynti on suojaisan sisäpihan puolella. Huoneiden ikkunat antavat Yrjönkadulle, avokeittiön ja kodinhoitohuoneen ikkunat ovat sisäpihalle.",
     "price": 900000
