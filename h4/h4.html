@@ -6,15 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fullstack - H4</title>
     <link rel="stylesheet" href="../styles.css" />
+
+    <style>
+      /* T1 */
+      #apCardList {
+        max-height: 700px;
+        overflow-x: scroll;
+      }
+      .apCardContainer {
+        display: flex;
+        padding: var(--spacing2);
+        border-radius: var(--border-radius);
+        background-color: white;
+        height: 250px;
+        margin-bottom: var(--spacing2);
+      }
+      .apImageBox {
+        width: 38%;
+        height: 100%;
+      }
+      .apImageBox img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .apInfoBox {
+        padding-left: var(--spacing1);
+        width: 62%;
+        overflow-x: scroll;
+      }
+      .apInfoBox > *:not(:last-child) {
+        margin-bottom: var(--spacing1);
+      }
+    </style>
   </head>
-  <body>
+  <body onload="init()">
     <a href="../index.html"
       ><button><span>&#8592;</span>Hakemistoon</button></a
     >
     <div class="container">
       <a href="#" class="backToTop"> &#8593; </a>
       <h1>Harjoitukset 4</h1>
-      <div>stuff...</div>
+      <div class="exbox">
+        <h2>T1</h2>
+        <div id="apCardList"></div>
+      </div>
     </div>
+    <script src="app.js"></script>
   </body>
 </html>
