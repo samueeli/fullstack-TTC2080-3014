@@ -1,5 +1,3 @@
-// http://netisto.fi/ttc2080-s2022/files/h4/
-
 const apartmentList = document.getElementById('apCardList');
 
 //t1
@@ -33,21 +31,35 @@ const getHouses = () => {
     .catch((err) => console.log('Request (fetch houses) failed', err));
 };
 
+const filterHouses = (houses) => {
+  let result = houses;
+  const filterBySqft = document.getElementById('filterBySqft').checked;
+  const filterByPrice = document.getElementById('filterByPrice').checked;
+
+  filterBySqft && (result = result.filter((house) => house.sqft < 200));
+  filterByPrice && (result = result.filter((house) => house.price < 1000000));
+
+  return result;
+};
+
 const renderHouses = async () => {
   let houses = await getHouses();
+  let filteredHouses = filterHouses(houses);
 
-  apartmentList.innerHTML = houses
-    .map((house, index) => {
-      return ApartmentCard(
-        house.img,
-        'house image' + index + 1,
-        house.address,
-        house.sqft,
-        house.description,
-        house.price.toLocaleString().replace(/,/g, ' ')
-      );
-    })
-    .join('');
+  houses
+    ? (apartmentList.innerHTML = filteredHouses
+        .map((house, index) => {
+          return ApartmentCard(
+            house.img,
+            'house image' + index + 1,
+            house.address,
+            house.sqft,
+            house.description,
+            house.price.toLocaleString().replace(/,/g, ' ')
+          );
+        })
+        .join(''))
+    : (apartmentList.innerHTML = '<h3>Asuntoja tulossa...</h3>');
 };
 
 const init = () => {

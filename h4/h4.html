@@ -49,6 +49,15 @@
       <h1>Harjoitukset 4</h1>
       <div class="exbox">
         <h2>T1</h2>
+        <div class="filterContainer">
+          <input type="checkbox" id="filterBySqft" onchange="renderHouses()" />
+          <label style="margin-right: 2rem" for="filterBySqft"
+            >alle 200m2</label
+          >
+          <input type="checkbox" id="filterByPrice" onchange="renderHouses()" />
+          <label for="filterByPrice">alle 1 000 000 euroa</label>
+        </div>
+        <hr style="margin-bottom: 1rem" />
         <div id="apCardList"></div>
       </div>
     </div>
