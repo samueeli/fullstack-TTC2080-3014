@@ -38,6 +38,34 @@
       .apInfoBox > *:not(:last-child) {
         margin-bottom: var(--spacing1);
       }
+
+      /* T3 */
+      .searchContainer {
+        padding: var(--spacing2);
+        background-color: white;
+        border-radius: var(--border-radius);
+      }
+      #searchInput {
+        width: 100%;
+        padding: 6px 8px;
+      }
+      .searchResults {
+        display: flex;
+        flex-direction: column;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+      .searchItem {
+        padding: 6px 8px;
+        border: 1px solid var(--bg-grey);
+      }
+      .searchItem:hover {
+        background-color: var(--bg-grey);
+      }
+      .searchItem.selected {
+        background-color: var(--bg-grey);
+      }
     </style>
   </head>
   <body onload="init()">
@@ -65,6 +93,21 @@
       </div>
       <div class="exbox">
         <h2>T3</h2>
+        <div class="container">
+          <div class="searchContainer">
+            <h3>Fetch API - SearchForm</h3>
+            <div id="searchArea">
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="Search for name..."
+                oninput="updateSearch()"
+                autocomplete="off"
+              />
+              <ul class="searchResults"></ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <script src="app.js"></script>
