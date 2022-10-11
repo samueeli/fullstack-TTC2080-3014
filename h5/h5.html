@@ -14,7 +14,194 @@
     <div class="container">
       <a href="#" class="backToTop"> &#8593; </a>
       <h1>Harjoitukset 5</h1>
-      <div>stuff...</div>
+      <div class="exbox">
+        <h2>T1</h2>
+        <pre>
+          <code>
+            // server.js file has <mark>console.log('Samuli Salminen')</mark>
+            // Run <mark>$ node server.js</mark> in the same folder in command prompt
+            // => Samuli Salminen
+          </code>
+        </pre>
+      </div>
+      <div class="exbox">
+        <h2>T2</h2>
+        <pre>
+          <code>
+            // user.js
+
+            const getName = () => {
+              return 'Samuli Salminen';
+            };
+            const getLocation = () => {
+              return 'Tampere';
+            };
+            const getBirthday = () => {
+              return '01.01.1980';
+            };
+
+            module.exports = { getName, getLocation, getBirthday };
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // server.js
+            
+            const user = require('./user');
+
+            console.log(
+              `${user.getName()} lives in ${user.getLocation()} and was born on ${user.getBirthday()}`
+            );
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            $ node server.js
+            Samuli Salminen lives in Tampere and was born on 01.01.1980
+          </code>
+        </pre>
+      </div>
+      <div class="exbox">
+        <h2>T3</h2>
+        <pre>
+          <code>
+            // integers.txt
+
+            1,2,3,4,5,6,7,8,9
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // server.js
+
+            const fs = require('fs');
+
+            fs.readFile('integers.txt', (error, data) => {
+              if (error) console.error(error);
+              else {
+                const dataString = data.toString();
+                const dataArray = dataString.split(',');
+                const sum = dataArray.reduce((a, b) => Number(a) + Number(b));
+                
+                console.log('Reading file and calculate a sum...');
+                console.log(`Sum is ${sum}`);
+              }
+            });
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            $ node server.js
+            Reading file and calculate a sum...
+            Sum is 45
+          </code>
+        </pre>
+      </div>
+      <div class="exbox">
+        <h2>T4</h2>
+        <pre>
+          <code>
+            // counter.json
+
+            {"count": 1}
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // server.json
+
+            const http = require('http');
+            const hostname = '127.0.0.1';
+            const port = 3000;
+
+            const readCounter = () => {
+              let result = '';
+              try {
+                result = JSON.parse(fs.readFileSync('counter.json')).count;
+              } catch (error) {
+                console.log('readCounter error', error);
+              }
+              return result;
+            };
+
+            const writeCounter = () => {
+              let result;
+              try {
+                result = JSON.parse(fs.readFileSync('counter.json'));
+                result.count++;
+                fs.writeFileSync('counter.json', JSON.stringify(result));
+              } catch (error) {
+                console.log('writeCounter error', error);
+              }
+            };
+
+            const server = http.createServer((req, res) => {
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'text/plain');
+              res.write(`Request counter value is ${readCounter()}`);
+              res.end();
+              writeCounter();
+            });
+
+            server.listen(port, hostname, () => {
+              console.log(`Server running at http://${hostname}:${port}/`);
+            });
+          </code>
+        </pre>
+      </div>
+      <div class="exbox">
+        <h2>T5</h2>
+        <pre>
+          <code>
+            // 05-exercise.js
+
+            if (
+              process.argv.length < 5 ||
+              isNaN(process.argv[2]) ||
+              isNaN(process.argv[3]) ||
+              isNaN(process.argv[4])
+            ) {
+              console.log(
+                `Usage: 05-exercise.js RANDOMIZED_NUMBERS_COUNT MIN_VALUE MAX_VALUE`
+              );
+              process.exit(-1);
+            }
+
+            const RANDOMIZED_NUMBERS_COUNT = Number(process.argv[2]);
+            const MIN_VALUE = Number(process.argv[3]);
+            const MAX_VALUE = Number(process.argv[4]);
+
+            const createArray = (min, max) => {
+              let newArr = [];
+              min = Math.ceil(min);
+              max = Math.floor(max);
+
+              for (let i = 0; i < RANDOMIZED_NUMBERS_COUNT; i++) {
+                newArr.push(
+                  Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) +
+                    Math.ceil(min)
+                );
+              }
+
+              return newArr;
+            };
+
+            console.log(createArray(MIN_VALUE, MAX_VALUE));
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            $ node 05-exercise.js
+            // returns the array of random integers
+          </code>
+        </pre>
+      </div>
     </div>
   </body>
 </html>
