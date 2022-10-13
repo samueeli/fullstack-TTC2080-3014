@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fullstack - H6</title>
     <link rel="stylesheet" href="../styles.css" />
+    <style>
+      h4 {
+        margin-top: 1rem;
+      }
+    </style>
   </head>
   <body>
     <a href="../index.html"
@@ -14,7 +19,140 @@
     <div class="container">
       <a href="#" class="backToTop"> &#8593; </a>
       <h1>Harjoitukset 6</h1>
-      <div>stuff...</div>
+      <div class="exbox">
+        <h2>T1</h2>
+        <pre>
+          <code>
+            // index.js
+
+            import express from 'express';
+            import path from 'path';
+            import { fileURLToPath } from 'url';
+            import { logger } from './middleware/logger.js';
+            import { router as userRouter } from './routes/users.js';
+
+            // Needed to add these since I'm using ES6 modules instead of CommonJS
+            const __filename = fileURLToPath(import.meta.url);
+            const __dirname = path.dirname(__filename);
+
+            const app = express();
+
+            // Body parser
+            app.use(express.json());
+            app.use(express.urlencoded({ extended: false }));
+
+            // init logger middleware
+            app.use(logger);
+
+            // Users routes
+            app.use('/users', userRouter);
+
+            const PORT = process.env.PORT || 3000;
+
+            app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // routes/users.js
+
+            import { Router } from 'express';
+
+            let users = [
+              {
+                id: '1',
+                name: 'Kirsi Kernel',
+              },
+              {
+                id: '2',
+                name: 'Matti Mainio',
+              },
+            ];
+
+            export const router = Router();
+
+            // get all users
+            router.get('/', (req, res) => {
+              res.json(users);
+            });
+
+            // get single user
+            router.get('/:id', (req, res) => {
+              const queryID = req.params.id;
+              const userExists = users.some((user) => user.id === queryID);
+              if (userExists) {
+                res.json(users.filter((user) => user.id === queryID));
+              } else {
+                res
+                  .status(404)
+                  .json({ msg: `Couldn't find a user with the id ${queryID}` });
+              }
+            });
+
+            // add user
+            router.post('/', (req, res) => {
+              const maxId = Math.max(...users.map((user) => user.id), 0);
+              const newUser = {
+                id: (maxId + 1).toString(),
+                name: req.body.name,
+              };
+              users.push(newUser);
+              res.json({ newUser, msg: 'Just Added a new user', users });
+            });
+
+            // delete user
+            router.delete('/:id', (req, res) => {
+              const queryID = req.params.id;
+              const userExists = users.some((user) => user.id === queryID);
+              if (userExists) {
+                const remainingUsers = users.filter((user) => user.id !== queryID);
+                res.json({
+                  msg: `Deleted user with ID: ${queryID}`,
+                  remainingUsers: remainingUsers,
+                });
+              } else {
+                res
+                  .status(404)
+                  .json({ msg: `Couldn't find a user with the id ${queryID}` });
+              }
+            });
+
+            // edit user
+            router.put('/:id', (req, res) => {
+              const queryID = req.params.id;
+              const userExists = users.some((user) => user.id === queryID);
+              if (userExists) {
+                users.forEach((user) => {
+                  user.id === queryID
+                    ? (user.name = req.body.name)
+                    : (user.name = user.name);
+                });
+                res.json({ msg: `Updated user with ID: ${queryID}`, users });
+              } else {
+                res
+                  .status(404)
+                  .json({ msg: `Couldn't find a user with the id ${queryID}` });
+              }
+            });
+          </code>
+        </pre>
+        <hr />
+        <h4>get all users</h4>
+        <img src="./screenshots/get_all.png" alt="getall" width="100%" />
+
+        <h4>get single user</h4>
+        <img src="./screenshots/get_single.png" alt="getsingle" width="100%" />
+
+        <h4>add user</h4>
+        <img src="./screenshots/post.png" alt="post" width="100%" />
+
+        <h4>delete user</h4>
+        <img src="./screenshots/delete.png" alt="del" width="100%" />
+
+        <h4>update user</h4>
+        <img src="./screenshots/put.png" alt="put" width="100%" />
+      </div>
     </div>
   </body>
 </html>
