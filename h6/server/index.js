@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { logger } from './middleware/logger.js';
 import { router as userRouter } from './routes/users.js';
+import { router as adderRouter } from './routes/adder.js';
 
 // Needed to add these since I'm using ES6 modules instead of CommonJS
 const __filename = fileURLToPath(import.meta.url);
@@ -19,6 +20,9 @@ app.use(logger);
 
 // Users routes
 app.use('/users', userRouter);
+
+// Adder routes
+app.use('/adder', adderRouter);
 
 const PORT = process.env.PORT || 3000;
 

@@ -1,21 +1,28 @@
 import { Router } from 'express';
-
-let users = [
-  {
-    id: '1',
-    name: 'Kirsi Kernel',
-  },
-  {
-    id: '2',
-    name: 'Matti Mainio',
-  },
-];
+import { users } from '../Users.js';
 
 export const router = Router();
 
 // get all users
 router.get('/', (req, res) => {
-  res.json(users);
+  const markup = `
+  <div>
+    <span><a href="/users">List All Users</a></span> |
+    <span><a href="/adder">Add New User</a></span>
+    <br />
+    <hr />
+    <br />
+    <ul>
+      ${users
+        .map((user) => {
+          return `<li>${user.name}</li>`;
+        })
+        .join('')}
+    </ul>
+  </div>
+  `;
+  res.send(markup);
+  // res.json(users);
 });
 
 // get single user
@@ -39,7 +46,8 @@ router.post('/', (req, res) => {
     name: req.body.name,
   };
   users.push(newUser);
-  res.json({ newUser, msg: 'Just Added a new user', users });
+  res.redirect('/users');
+  // res.json({ newUser, msg: 'Just Added a new user', users });
 });
 
 // delete user

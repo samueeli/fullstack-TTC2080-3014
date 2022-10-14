@@ -140,18 +140,147 @@
         <hr />
         <h4>get all users</h4>
         <img src="./screenshots/get_all.png" alt="getall" width="100%" />
-
         <h4>get single user</h4>
         <img src="./screenshots/get_single.png" alt="getsingle" width="100%" />
-
         <h4>add user</h4>
         <img src="./screenshots/post.png" alt="post" width="100%" />
-
         <h4>delete user</h4>
         <img src="./screenshots/delete.png" alt="del" width="100%" />
-
         <h4>update user</h4>
         <img src="./screenshots/put.png" alt="put" width="100%" />
+      </div>
+      <div class="exbox">
+        <h2>T2</h2>
+        <pre>
+          <code>
+            // logger.js
+
+            import * as fs from 'fs';
+
+            export const logger = (req, res, next) => {
+              const date = new Date();
+              const lDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+              const log = `${lDate}: ${req.method} ${req.url}\n`;
+
+              try {
+                console.log('Writing log to file...');
+                fs.appendFileSync('logs.txt', log);
+                console.log('Log saved to file.');
+              } catch (error) {
+                console.log('Writing to file failed');
+              }
+              next();
+            };
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // init in index.js
+
+            import { logger } from './middleware/logger.js';
+            app.use(logger);
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // example logs in logs.txt
+
+            14/10/2022 08:15:23: GET /users
+            14/10/2022 08:15:45: GET /users/1
+            14/10/2022 08:17:21: POST /users
+            14/10/2022 08:18:11: PUT /users/1
+            14/10/2022 08:19:04: DELETE /users/1
+          </code>
+        </pre>
+      </div>
+      <div class="exbox">
+        <h2>T3</h2>
+        <pre>
+          <code>
+            // index.js
+
+            ...
+
+            // Adder routes
+            app.use('/adder', adderRouter);
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // adder.js
+
+            import { Router } from 'express';
+
+            export const router = Router();
+
+            router.get('/', (req, res) => {
+              const markup = `
+              &lt;span&gt;&lt;a href="/users"&gt;List All Users&lt;/a&gt;&lt;/span&gt; |
+              &lt;span&gt;&lt;a href="/adder"&gt;Add New User&lt;/a&gt;&lt;/span&gt;
+              &lt;br /&gt;
+              &lt;hr /&gt;
+              &lt;br /&gt;
+              &lt;form action=/users method=post&gt;
+                Add a new user: &lt;input type=text name=name&gt;&lt;br&gt;
+                &lt;input type=submit value="add user"&gt;
+              &lt;/form&gt;
+              `;
+              res.send(markup);
+            });
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // users.js
+
+            ...
+
+            // get all users
+            router.get('/', (req, res) => {
+              const markup = `
+              &lt;div&gt;
+                &lt;span&gt;&lt;a href="/users"&gt;List All Users&lt;/a&gt;&lt;/span&gt; |
+                &lt;span&gt;&lt;a href="/adder"&gt;Add New User&lt;/a&gt;&lt;/span&gt;
+                &lt;br /&gt;
+                &lt;hr /&gt;
+                &lt;br /&gt;
+                &lt;ul&gt;
+                  ${users
+                    .map((user) =&gt; {
+                      return `&lt;li&gt;${user.name}&lt;/li&gt;`;
+                    })
+                    .join('')}
+                &lt;/ul&gt;
+              &lt;/div&gt;
+              `;
+              res.send(markup);
+            });
+
+            ...
+
+            // add user
+            router.post('/', (req, res) => {
+              const maxId = Math.max(...users.map((user) => user.id), 0);
+              const newUser = {
+                id: (maxId + 1).toString(),
+                name: req.body.name,
+              };
+              users.push(newUser);
+              res.redirect('/users');
+            });
+          </code>
+        </pre>
+        <hr />
+        <h4>Getting all users</h4>
+        <img src="./screenshots/UI_GET.png" alt="get" width="100%" />
+        <h4>Adding a new user</h4>
+        <img src="./screenshots/UI_POST.png" alt="post" width="100%" />
+        <h4>After adding the new user</h4>
+        <img src="./screenshots/UI_after_POST.png" alt="after" width="100%" />
       </div>
     </div>
   </body>
