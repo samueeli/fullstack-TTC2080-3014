@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fullstack - H7</title>
     <link rel="stylesheet" href="../styles.css" />
+    <style>
+      h4 {
+        margin-top: 1rem;
+      }
+    </style>
   </head>
   <body>
     <a href="../index.html"
@@ -14,7 +19,272 @@
     <div class="container">
       <a href="#" class="backToTop"> &#8593; </a>
       <h1>Harjoitukset 7</h1>
-      <div>stuff...</div>
+      <div class="exbox">
+        <h2>T1</h2>
+        <h4>MongoDB Cloud</h4>
+        <img src="./screenshots/mongoAtlas.png" alt="mongoAtlas" width="100%" />
+        <h4>MongoDB Compass</h4>
+        <img
+          src="./screenshots/mongoCompass.png"
+          alt="mongoCompass"
+          width="100%"
+        />
+      </div>
+      <div class="exbox">
+        <h2>T2</h2>
+        <h4>Use db</h4>
+        <img src="./screenshots/create-db.png" alt="create-db" width="100%" />
+        <h4>Create db/collection/document</h4>
+        <img
+          src="./screenshots/create-document.png"
+          alt="create-document"
+          width="100%"
+        />
+        <h4>Show collections</h4>
+        <img
+          src="./screenshots/show-collections.png"
+          alt="show-collections"
+          width="100%"
+        />
+        <h4>Generate documents</h4>
+        <img
+          src="./screenshots/generate-documents.png"
+          alt="generate-documents"
+          width="100%"
+        />
+        <h4>New generated documents</h4>
+        <img
+          src="./screenshots/generated-documents.png"
+          alt="generated-documents"
+          width="100%"
+        />
+        <h4>Update document</h4>
+        <img
+          src="./screenshots/update-document.png"
+          alt="update-document"
+          width="100%"
+        />
+        <h4>Recently updated document</h4>
+        <img
+          src="./screenshots/updated-document.png"
+          alt="updated-document"
+          width="100%"
+        />
+        <h4>Deleted document</h4>
+        <img
+          src="./screenshots/document-remove.png"
+          alt="document-remove"
+          width="100%"
+        />
+        <h4>collection.find() after remove</h4>
+        <img
+          src="./screenshots/collection-find-after-remove.png"
+          alt="collection-find-after-remove"
+          width="100%"
+        />
+      </div>
+      <div class="exbox">
+        <h2>T3</h2>
+        <pre>
+          <code>
+            MONGO_URI is in the .env file (which is in .gitignore)
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // index.js
+
+            const express = require('express');
+            const dotenv = require('dotenv').config();
+            const connectDB = require('./config/db.js');
+            const logger = require('./middleware/logger.js');
+
+            connectDB();
+
+            const app = express();
+
+            // Body parser
+            app.use(express.json());
+            app.use(express.urlencoded({ extended: false }));
+
+            // init logger middleware
+            app.use(logger);
+
+            // Users routes
+            app.use('/users', require('./routes/usersRoutes.js'));
+
+            const PORT = process.env.PORT || 5000;
+
+            app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // config/db.js
+
+            const mongoose = require('mongoose');
+            const connectDB = async () => {
+              try {
+                const connect = await mongoose.connect(process.env.MONGO_URI);
+
+                console.log(`MongoDB connetcted: ${connect.connection.host}`);
+              } catch (error) {
+                console.log(error);
+                process.exit(1);
+              }
+            };
+
+            module.exports = connectDB;
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // routes/usersRoutes.js
+
+            const express = require('express');
+            const {
+              getUsers,
+              getUser,
+              createUser,
+              updateUser,
+              deleteUser,
+            } = require('../controllers/userController');
+
+            const router = express.Router();
+
+            // I could actually chain together (and save some space) the identical routes like so:
+            // router.route('/').get(getUsers).post(createUser)
+            // router.route('/:id').get(getUser).put(updateUser).delete(deleteUser)
+            // but since I like lists I just keep it like this
+
+            router.get('/', getUsers);
+            router.get('/:id', getUser);
+            router.post('/', createUser);
+            router.put('/:id', updateUser);
+            router.delete('/:id', deleteUser);
+
+            module.exports = router;
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // controllers/userController.js
+
+            const User = require('../models/userModel.js');
+
+            // GET - get all users
+            const getUsers = async (req, res) => {
+              const users = await User.find();
+
+              res.status(200).json(users);
+            };
+
+            // GET - get one user
+            const getUser = async (req, res) => {
+              const user = await User.findById(req.params.id);
+
+              if (!user) {
+                res.status(400).json({ msg: `No user with the id ${req.params.id}` });
+              } else {
+                res.status(200).json(user);
+              }
+            };
+
+            // POST - create new user
+            const createUser = async (req, res) => {
+              if (!req.body.name) {
+                res
+                  .status(400)
+                  .json({ msg: 'Error. No user was given. Name is required.' });
+              } else {
+                const user = await User.create({
+                  name: req.body.name,
+                });
+                res.status(200).json(user);
+              }
+            };
+
+            // PUT - update user
+            const updateUser = async (req, res) => {
+              const user = await User.findById(req.params.id);
+
+              if (!user) {
+                res.status(400).json({ msg: `user ${req.params.id} not found` });
+              } else {
+                const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+                  new: true,
+                });
+
+                res.status(200).json(updatedUser);
+              }
+            };
+
+            // DELETE - delete user
+            const deleteUser = async (req, res) => {
+              const user = await User.findById(req.params.id);
+
+              if (!user) {
+                res.status(400).json({ msg: `No user with the id ${req.params.id}` });
+              } else {
+                await user.remove();
+                res.status(200).json({ msg: `Deleted user ${req.params.id}` });
+              }
+            };
+
+            module.exports = {
+              getUsers,
+              getUser,
+              createUser,
+              updateUser,
+              deleteUser,
+            };
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // models/userModel.js
+
+            const mongoose = require('mongoose');
+
+            const userSchema = mongoose.Schema(
+              {
+                name: {
+                  type: String,
+                  required: [true, 'Please add a name for the user'],
+                },
+              },
+              { timestamps: true }
+            );
+
+            module.exports = mongoose.model('User', userSchema);
+          </code>
+        </pre>
+        <h4>Create user</h4>
+        <img
+          src="./screenshots/t3-create-user.png"
+          alt="t3-create"
+          width="100%"
+        />
+        <h4>Get all users after update</h4>
+        <img
+          src="./screenshots/t3-get-after-update.png"
+          alt="t3-after-update"
+          width="100%"
+        />
+        <h4>Delete user</h4>
+        <img src="./screenshots/t3-delete.png" alt="t3-delete" width="100%" />
+        <h4>Get users after delete</h4>
+        <img
+          src="./screenshots/t3-get-all-users-after-delete.png"
+          alt="t3-after-delete"
+          width="100%"
+        />
+      </div>
     </div>
   </body>
 </html>
