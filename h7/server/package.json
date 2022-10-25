@@ -1,11 +1,12 @@
 {
-  "name": "harjoitus6",
+  "name": "harjoitus7",
   "version": "1.0.0",
   "description": "express exercises",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "demodata": "node createDemoData.js"
   },
   "author": "",
   "license": "ISC",

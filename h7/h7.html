@@ -285,6 +285,193 @@
           width="100%"
         />
       </div>
+      <div class="exbox">
+        <h2>T4</h2>
+        <pre>
+          <code>
+            // models/cityModel.js
+
+            const mongoose = require('mongoose');
+            const { Schema } = mongoose;
+
+            const citySchema = new Schema({
+              city_id: Number,
+              cityname: String,
+              population: Number,
+            });
+
+            module.exports = mongoose.model('City', citySchema);
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // models/coursesModel.js
+
+            const mongoose = require('mongoose');
+            const { Schema } = mongoose;
+
+            const courseSchema = new Schema({
+              course_id: Number,
+              coursename: String,
+              credits: Number,
+            });
+
+            module.exports = mongoose.model('Course', courseSchema);
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // models/studentModel.js
+
+            const mongoose = require('mongoose');
+            const { Schema } = mongoose;
+
+            const studentSchema = new Schema({
+              student_id: Number,
+              lastname: String,
+              firstname: String,
+              birthday: Date,
+              eyecolor: String,
+              income: Schema.Types.Decimal128,
+              taxrate: Schema.Types.Decimal128,
+              hometown_id: Number,
+              grades: [
+                {
+                  date: Date,
+                  course_id: Number,
+                  grade: Number,
+                },
+              ],
+            });
+
+            module.exports = mongoose.model('Student', studentSchema);
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // createDemoData.js
+
+            const mongoose = require('mongoose');
+            const dotenv = require('dotenv').config();
+            const connectDB = require('./config/db.js');
+
+            const Student = require('./models/studentModel');
+            const Course = require('./models/courseModel');
+            const City = require('./models/cityModel');
+
+            const students = require('./demoData/students');
+            const courses = require('./demoData/courses');
+            const cities = require('./demoData/cities');
+
+            const createData = async () => {
+              try {
+                await connectDB();
+                await Student.deleteMany();
+                await Course.deleteMany();
+                await City.deleteMany();
+
+                for (let i = 0; i < cities.length; i++) {
+                  cities[i].save();
+                }
+                for (let i = 0; i < courses.length; i++) {
+                  courses[i].save();
+                }
+                for (let i = 0; i < students.length; i++) {
+                  students[i].save();
+                }
+
+                console.log('Created demodata!');
+              } catch (err) {
+                console.log('Error generating demodata!', err);
+              }
+            };
+
+            createData();
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            $ npm run demodata
+            Uses mock data from demoData folder to create data to database
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // Kysely 1
+
+            db.cities.find()
+
+            { _id: ObjectId("6357bf2d3d77e33c2ddb2848"),
+              city_id: 1,
+              cityname: 'Helsinki',
+              population: 631695,
+              __v: 0 }
+            { _id: ObjectId("6357bf2d3d77e33c2ddb284a"),
+              city_id: 3,
+              cityname: 'Tampere',
+              population: 226696,
+              __v: 0 }
+            { _id: ObjectId("6357bf2d3d77e33c2ddb2849"),
+              city_id: 2,
+              cityname: 'Turku',
+              population: 186756,
+              __v: 0 }
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // Kysely 2
+            
+            db.students.find(
+              { income: {$gt: 3500} },
+              { lastname: 1, firstname: 1, income: 1,_id: 0 }
+            ).sort({income: 1});
+
+            { lastname: 'Kariniemi',
+            firstname: 'Kari',
+            income: Decimal128("4100.5") }
+
+            { lastname: 'Jaakso',
+            firstname: 'Jamppa',
+            income: Decimal128("3800.5") }
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // Kysely 3
+            
+            db.students.find(
+              { eyecolor: "Green", hometown_id: 1},
+              { lastname: 1, firstname: 1, eyecolor: 1, hometown_id: 1, _id: 0 }
+            ).sort({lastname: 1, firstname: 1})
+
+            { lastname: 'Jaakso',
+              firstname: 'Jamppa',
+              eyecolor: 'Green',
+              hometown_id: 1 }
+          </code>
+        </pre>
+        <hr />
+        <pre>
+          <code>
+            // Kysely 4
+
+            db.students.aggregate([{$group: {_id: "$eyecolor", income: {$avg: "$income"}}}]
+            ).sort({income: -1})
+
+            { _id: 'Brown', income: Decimal128("4100.5") }
+            { _id: 'Green', income: Decimal128("3800.5") }
+            { _id: 'Blue', income: Decimal128("3200.5") }
+          </code>
+        </pre>
+      </div>
     </div>
   </body>
 </html>
