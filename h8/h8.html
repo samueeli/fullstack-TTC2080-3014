@@ -4,8 +4,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fullstack - H1</title>
+    <title>Fullstack - H8</title>
     <link rel="stylesheet" href="../styles.css" />
+    <style>
+      h4 {
+        margin-top: 1rem;
+      }
+      p {
+        margin: 1rem 0;
+      }
+      ol {
+        list-style-position: inside;
+      }
+    </style>
   </head>
   <body>
     <a href="../index.html"
@@ -14,7 +25,64 @@
     <div class="container">
       <a href="#" class="backToTop"> &#8593; </a>
       <h1>Harjoitukset 8</h1>
-      <div>stuff...</div>
+      <div class="exbox">
+        <h2>T1</h2>
+        <h4>No todos</h4>
+        <img src="./screenshots/ui-no-todos.png" alt="no todos" width="100%" />
+        <h4>Added todos</h4>
+        <img
+          src="./screenshots/ui-added-todos.png"
+          alt="added todos"
+          width="100%"
+        />
+        <h4>Deleted todos</h4>
+        <img
+          src="./screenshots/ui-removed-todos.png"
+          alt="remove todos"
+          width="100%"
+        />
+      </div>
+      <div class="exbox">
+        <h2>T2</h2>
+        <h4>No edits</h4>
+        <img src="./screenshots/t2-1.png" alt="t1 todos" width="100%" />
+        <h4>On edit</h4>
+        <img src="./screenshots/t2-2.png" alt="t2 todos" width="100%" />
+        <h4>Submit edit</h4>
+        <img src="./screenshots/t2-3.png" alt="t3 todos" width="100%" />
+      </div>
+      <div class="exbox">
+        <h2>T3</h2>
+        <p>
+          Tein deploymentin H6:seen Cyclic:in kautta. Ajattelin ensin tehdä
+          Herokun kautta, koska minulla oli siellä jo tili, mutta siellä loppuu
+          ilmainen deploymentti NODE appeille lokakuun lopussa, joten halusin
+          kokeilla jotain muuta. Cyclic antaa esim Free Forever planin, joka
+          itselleni sopii, kun testailee kaikkea.
+        </p>
+        <p>Prosessi oli kivuton ja kesti joitakin sekuntteja:</p>
+        <h4>Vaiheet</h4>
+        <ol>
+          <li>Kirjauduin Cyclic.sh github tunnuksillani</li>
+          <li>
+            Autoroin Cyclikin githubissa ja annoin oikeudet kyseessä olevaan
+            repositorioon
+          </li>
+          <li>Valittuani haluamani repon, klikkasin "Connect"</li>
+        </ol>
+        <h4>...ja TADAA! Homma skulaa :)</h4>
+        <img
+          src="./screenshots/cyclic-1.png"
+          alt="deplyment success"
+          width="100%"
+        />
+        <h4>...ja bileet toimii myös netissä</h4>
+        <img
+          src="./screenshots/cyclic-2.png"
+          alt="deplyment success"
+          width="100%"
+        />
+      </div>
     </div>
   </body>
 </html>
